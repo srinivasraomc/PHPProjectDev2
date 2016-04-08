@@ -11,6 +11,8 @@ class Article extends Model
     protected $table = 'articles';
 
 
+    protected $fillable = ['published_at','title', 'body'];
+
     public function scopePublished($query)
     {
         $query->where('published_at','<=', Carbon::now() );

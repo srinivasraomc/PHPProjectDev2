@@ -8,6 +8,7 @@ use App\Article;
 
 use Carbon\Carbon;
 use Request;
+use App\Http\Requests\CreateArticleRequest;
 use App\Http\Requests;
 
 class ArtclesController extends Controller
@@ -22,7 +23,7 @@ class ArtclesController extends Controller
         //
 
         //$Articles = Article::latest()->get();
-        $Articles = Article::latest('published_at')->UnPublished()->get();
+        $Articles = Article::latest('published_at')->Published()->get();
         return view('articles.index')->with('article', $Articles);
         //return $Articles;
     }
@@ -44,10 +45,11 @@ class ArtclesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function store(CreateArticleRequest $request)
     {
         //
-        $input = Request::all();
+        $input = $request->all();
         $Article = new Article;
         $Article->title = $input['title'];
         $Article->body= $input['body'];
@@ -81,6 +83,9 @@ class ArtclesController extends Controller
     public function edit($id)
     {
         //
+        $articleEdit =  Article::findOrFail($id);
+
+        return view ('articles.edit')->with('articleEdit', $articleEdit  );
     }
 
     /**
@@ -90,9 +95,14 @@ class ArtclesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateArticleRequest $request, $id)
     {
-        //
+
+        $ArticlesID = Article::findOrFail($id);
+
+        $ArticlesID->update($request->all());
+        return redirect('articles');
+
     }
 
     /**
