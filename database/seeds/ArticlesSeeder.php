@@ -34,5 +34,13 @@ class ArticlesSeeder extends Seeder
                 'published_at' => \Carbon\Carbon::now()
             ]
         );
+
+        DB::table('articles')->insert(
+            [
+                'title' => 'laravel',
+                'body' => 'laravel',
+                'published_at' => \Carbon\Carbon::now()
+            ]
+        );
     }
 }

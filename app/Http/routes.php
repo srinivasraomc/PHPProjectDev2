@@ -23,3 +23,7 @@ Route::get('articles', 'ArtclesController@index');
 //Route::get('articles/{id}', 'ArtclesController@show');
 //Route::post('articles', 'ArtclesController@store');
 Route::resource('articles','ArtclesController');
+
+Route::auth();
+
+Route::get('/articles', 'ArtclesController@index');

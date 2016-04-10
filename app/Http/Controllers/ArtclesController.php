@@ -54,6 +54,7 @@ class ArtclesController extends Controller
         $Article->title = $input['title'];
         $Article->body= $input['body'];
         $Article->published_at= $input['published_at'];
+        $Article->user_id= $input['user_id'];
         //$Article->save();
         $Article->saveOrFail();
         return redirect('articles');
