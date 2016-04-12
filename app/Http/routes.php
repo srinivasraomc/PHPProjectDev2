@@ -27,3 +27,9 @@ Route::resource('articles','ArtclesController');
 Route::auth();
 
 Route::get('/articles', 'ArtclesController@index');
+
+Route::get('foo', ['middleware' => 'manager', function() {
+
+    return 'this is for manager';
+
+}]);

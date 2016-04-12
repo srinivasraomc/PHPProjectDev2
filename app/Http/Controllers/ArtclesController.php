@@ -8,19 +8,35 @@ use App\Article;
 
 use Carbon\Carbon;
 use Request;
+use Auth;
 use App\Http\Requests\CreateArticleRequest;
 use App\Http\Requests;
 
 class ArtclesController extends Controller
 {
     /**
+     * ArtclesController constructor.
+     */
+
+
+    public function __construct()
+    {
+        $this->middleware('auth',['only' => 'create']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+
+
     public function index()
     {
         //
+
+       // return auth::user()->name;
 
         //$Articles = Article::latest()->get();
         $Articles = Article::latest('published_at')->Published()->get();
@@ -36,6 +52,12 @@ class ArtclesController extends Controller
     public function create()
     {
         //
+       // if(Auth::guest())
+       // {
+      //      return redirect('articles');
+       // }
+
+
         return view('articles.create');
     }
 
@@ -49,13 +71,15 @@ class ArtclesController extends Controller
     public function store(CreateArticleRequest $request)
     {
         //
-        $input = $request->all();
+        //$Article = new Article($request->all());
+       // auth::user()->articles()->save(new Article($request->all()));
+
+       $input = $request->all();
         $Article = new Article;
         $Article->title = $input['title'];
         $Article->body= $input['body'];
         $Article->published_at= $input['published_at'];
-        $Article->user_id= $input['user_id'];
-        //$Article->save();
+        $Article->user_id= Auth::user()->id;
         $Article->saveOrFail();
         return redirect('articles');
     }
