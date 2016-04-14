@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Article;
 
 //use Illuminate\Http\Request;
-
+//use Illuminate\Http;
+use App\Tag;
 use Carbon\Carbon;
 use Request;
 use Auth;
 use App\Http\Requests\CreateArticleRequest;
 use App\Http\Requests;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ArtclesController extends Controller
 {
@@ -56,9 +58,9 @@ class ArtclesController extends Controller
        // {
       //      return redirect('articles');
        // }
+        $tags = Tag::lists('name');
 
-
-        return view('articles.create');
+        return view('articles.create')->with('tag',$tags );
     }
 
     /**
@@ -81,6 +83,8 @@ class ArtclesController extends Controller
         $Article->published_at= $input['published_at'];
         $Article->user_id= Auth::user()->id;
         $Article->saveOrFail();
+
+        \Session::flash('flash_message', 'you have create new artcile');
         return redirect('articles');
     }
 

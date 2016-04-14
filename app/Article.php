@@ -36,4 +36,10 @@ class Article extends Model
 
         return $this->belongsTo('App\User');
     }
+
+    public function tage()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
+
 }

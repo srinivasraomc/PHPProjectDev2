@@ -36,6 +36,14 @@
     </style>
 </head>
 <body>
+    @if(Session::has('flash_message'))
+        <button type = "button" class = "close" data-dismiss = "alert" aria-hidden="true">&times;</button>
+        <div class="alert alert-sucess">{{ Session::get('flash_message')}}
+        </div>
+    @endif
     @yield('content')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </body>
 </html>
